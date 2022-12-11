@@ -1,51 +1,500 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.springframework</groupId>
-    <artifactId>jb-hello-world-maven</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1.0</version>
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
 
-    <!-- tag::joda[] -->
-     <properties>
-           <java.version>1.8</java.version>
-           <maven.compiler.source>1.6</maven.compiler.source>
-           <maven.compiler.target>1.6</maven.compiler.target>
-     </properties>
+<groupId>DataQualityScorecard</groupId>
 
-      <dependencies>
-           <dependency>
-               <groupId>joda-time</groupId>
-               <artifactId>joda-time</artifactId>
-               <version>2.2</version>
-           </dependency>
-       </dependencies>
-       <!-- end::joda[] -->
-       
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>hello.HelloWorld</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<artifactId>workflow</artifactId>
+
+<version>${revision}</version>
+
+<packaging>jar</packaging>
+
+<name>Workflow</name>
+
+<url>http://maven.apache.org</url>
+
+
+
+<!-- ====================================================================== -->
+
+<!-- P A R E N T  -->
+
+<!-- ====================================================================== --> 
+
+<parent>
+
+<groupId>cdscore</groupId>
+
+<artifactId>cdscore-parent</artifactId>
+
+<version>1.0.0</version>
+
+<relativePath>../../../pom.xml</relativePath>
+
+</parent>
+
+
+
+<properties>
+
+<revision>1.0.0</revision>
+
+<maven.compiler.source>1.8</maven.compiler.source>
+
+<maven.compiler.target>1.8</maven.compiler.target> 
+
+<encoding>UTF-8</encoding>
+
+<scala.tools.version>2.11.10</scala.tools.version>
+
+
+
+<!-- Put the Scala version of the cluster -->
+
+<scala.compat.version>2.11.10</scala.compat.version>
+
+<scala.version>2.11.10</scala.version>
+
+</properties>
+
+
+
+<!--    <repositories>
+
+<repository>
+
+<id>cloudera-repo-releases</id>
+
+<url>https://repository.cloudera.com/artifactory/repo/</url>
+
+</repository> -->
+
+
+
+<!-- 2019-05-28: ADDED AS PART OF SPLUNK LOGGER INSTALLATION -->
+
+<!--         <repository>
+
+<id>cdscommons</id>
+
+<name>log</name>
+
+<url>http://artifactory.trusted.visa.com/cdscommons-snapshots</url>
+
+<releases>
+
+<enabled>true</enabled>
+
+<updatePolicy>never</updatePolicy>
+
+</releases>
+
+<snapshots>
+
+<enabled>true</enabled>
+
+<updatePolicy>never</updatePolicy>
+
+</snapshots>
+
+</repository>
+
+
+
+
+
+<repository>
+
+<id>mavenrepo</id>
+
+<name>maven</name>
+
+<url>https://artifactory.trusted.visa.com/mavenrepo</url>
+
+<releases>
+
+<enabled>true</enabled>
+
+<updatePolicy>never</updatePolicy>
+
+</releases>
+
+<snapshots>
+
+<enabled>true</enabled>                       
+
+<updatePolicy>never</updatePolicy>                   
+
+</snapshots>               
+
+</repository>
+
+<repository>
+
+<id>central-cache</id>
+
+<name>maven</name>
+
+<url>https://artifactory.trusted.visa.com/central-cache</url>
+
+<releases>
+
+ <enabled>true</enabled>
+
+ <updatePolicy>never</updatePolicy>
+
+</releases>
+
+<snapshots>
+
+<enabled>true</enabled>
+
+<updatePolicy>never</updatePolicy>
+
+</snapshots>
+
+</repository>
+
+
+
+
+
+</repositories> -->
+
+
+
+<build>
+
+<sourceDirectory>src/</sourceDirectory>
+
+<!-- <testSourceDirectory>src</testSourceDirectory> -->
+
+<plugins>
+
+
+
+<!-- <plugin>
+
+<groupId>net.alchim31.maven</groupId>
+
+	   <artifactId>scala-maven-plugin</artifactId>
+
+	   <version>3.2.1</version>
+
+	   <executions>
+
+			  <execution>
+
+					<goals>
+
+						  <goal>compile</goal>
+
+						   <goal>testCompile</goal>
+
+					</goals>
+
+					<configuration>
+
+						  <args>
+
+								 <arg>-make:transitive</arg>
+
+								 <arg>-dependencyfile</arg>
+
+						  <arg>${project.build.directory}/.scala_dependencies</arg>
+
+						  </args>
+
+					</configuration>
+
+			  </execution>
+
+	   </executions>
+
+</plugin> -->
+
+
+
+
+
+<!-- Scala Maven plugin -->
+
+<plugin>
+
+<groupId>net.alchim31.maven</groupId>
+
+<artifactId>scala-maven-plugin</artifactId>
+
+<version>3.2.1</version>
+
+<executions>
+
+<execution>
+
+	<goals>
+
+		<goal>compile</goal>
+
+	</goals>
+
+</execution>
+
+</executions>
+
+<configuration>
+
+<jvmArgs>
+
+	<jvmArg>-Xss4m</jvmArg>
+
+	<jvmArg>-Xms512m</jvmArg>
+
+	<jvmArg>-Xmx4096m</jvmArg>
+
+</jvmArgs>
+
+</configuration>
+
+</plugin>
+
+
+
+<!-- plugin>
+
+<groupId>org.apache.maven.plugins</groupId>
+
+	   <artifactId>maven-surefire-plugin</artifactId>
+
+	   <version>2.13</version>
+
+	   <configuration>
+
+
+
+			  <argLine>-J -Xss100m</argLine>
+
+			  <useFile>false</useFile>
+
+	   <disableXmlReport>true</disableXmlReport>
+
+			  <includes>
+
+				  <include>**/*Test.*</include>
+
+				 <include>**/*Suite.*</include>
+
+			  </includes>
+
+	   </configuration>
+
+</plugin-->
+
+
+
+<!-- Maven surefire plugin -->
+
+<plugin>
+
+<groupId>org.apache.maven.plugins</groupId>
+
+<artifactId>maven-surefire-plugin</artifactId>
+
+<version>2.7</version>
+
+<configuration>
+
+<skipTests>true</skipTests>
+
+</configuration>
+
+</plugin>
+
+
+
+<!-- Maven resources plugin -->
+
+<plugin>
+
+<groupId>org.apache.maven.plugins</groupId>
+
+<artifactId>maven-resources-plugin</artifactId>
+
+<version>2.7</version>
+
+<configuration>
+
+<encoding>UTF-8</encoding>
+
+</configuration>
+
+</plugin>
+
+
+
+<!-- <plugin>
+
+<groupId>org.apache.maven.plugins</groupId>
+
+	   <artifactId>maven-jar-plugin</artifactId>
+
+	   <version>2.4</version>
+
+	   <configuration>
+
+			  <archive>
+
+					<manifest>
+
+					<mainClass>visa.ccdri.workflow.Main</mainClass>
+
+					</manifest>
+
+			  </archive>
+
+	   </configuration>
+
+</plugin> -->
+
+
+
+<!-- "package" command plugin -->
+
+<plugin>
+
+	   <artifactId>maven-assembly-plugin</artifactId>
+
+	   <version>2.4.1</version>
+
+	   <configuration>
+
+			  <descriptorRefs>
+
+					<descriptorRef>jar-with-dependencies</descriptorRef>
+
+			  </descriptorRefs>
+
+
+
+	   </configuration>
+
+	   <executions>
+
+			  <execution>
+
+					<id>make-assembly</id>
+
+					<phase>package</phase>
+
+					<goals>
+
+						  <goal>single</goal>
+
+					</goals>
+
+			  </execution>
+
+	   </executions>
+
+</plugin>
+
+</plugins>
+
+</build>
+
+
+
+<dependencies>
+
+<!-- Scala and Spark dependencies -->
+
+<dependency>
+
+<groupId>org.scala-lang</groupId>
+
+<artifactId>scala-library</artifactId>
+
+<version>${scala.version}</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+
+
+<dependency>
+
+<groupId>org.apache.spark</groupId>
+
+<artifactId>spark-core_2.11</artifactId>
+
+<version>2.3.0.2.6.5.179-4</version>
+
+<scope>provided</scope>
+
+</dependency> 
+
+<dependency>
+
+<groupId>org.apache.spark</groupId>
+
+<artifactId>spark-hive_2.11</artifactId>
+
+<version>2.3.0.2.6.5.179-4</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+
+
+<!-- <dependency>
+
+<groupId>org.apache.spark</groupId>
+
+<artifactId>spark-streaming_2.10</artifactId>
+
+<version>1.6.0-cdh5.7.0</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+<dependency>
+
+<groupId>org.apache.spark</groupId>
+
+<artifactId>spark-sql_2.10</artifactId>
+
+<version>1.6.0-cdh5.7.0</version>
+
+<scope>provided</scope>
+
+</dependency>
+
+
+
+<dependency> Spark dependency
+
+<groupId>org.apache.spark</groupId>
+
+<artifactId>spark-mllib_2.10</artifactId>
+
+<version>1.6.0-cdh5.7.0</version>
+
+<scope>provided</scope>
+
+</dependency> -->
+
+<dependency> <!-- Spark dependency -->
+
+<groupId>org.apache.hive</groupId>
+
+<artifactId>hive-jdbc</artifactId>
+
+<version>
+
+
+
 </project>

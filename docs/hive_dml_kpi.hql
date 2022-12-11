@@ -13,7 +13,6 @@ PARTITIONED BY (load_date bigint)
 STORED AS ORC
 LOCATION 'hdfs://nameservicecrtocc/projects/ccdri/hive/cdsltacert/cds_dq_scorecard_kpi';
 
-	
 INSERT INTO cds_dq_scorecard_kpi partition(load_date=20221210) VALUES(100,'Data Completeness',1,'Completeness Check',0,1,'Y','2022-12-10 16:45:38','dqs');
 INSERT INTO cds_dq_scorecard_kpi partition(load_date=20221210) VALUES(200,'Data Standardization',2,'DataType Check',0,2,'Y','2022-12-10 16:45:38','dqs');
 INSERT INTO cds_dq_scorecard_kpi partition(load_date=20221210) VALUES(200,'Data Standardization',3,'Length Check',0,2,'Y','2022-12-10 16:45:38','dqs');
@@ -43,10 +42,3 @@ INSERT INTO cds_dq_scorecard_kpi partition(load_date=20221210) VALUES(600,'Data 
 |500           |Data Currency       |11        |Current Delta Check |100              |4           |Y          |2022-12-10 16:45:38|dqs       |20221210 |
 |600           |Data Uniqueness     |12        |Duplicate Check     |100              |5           |Y          |2022-12-10 16:45:38|dqs       |20221210 |
 +--------------+--------------------+----------+--------------------+-----------------+------------+-----------+-------------------+----------+---------+
-
-
-
-
-
-
-
